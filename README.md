@@ -1,94 +1,364 @@
-# Repository Template
+<div align="center">
 
-[![Build Status](https://app.travis-ci.com/melaasar/cs130-template.svg?branch=master)](https://app.travis-ci.com/github/melaasar/cs130-template)
-[![Release](https://img.shields.io/github/v/release/melaasar/cs130-template?label=release)](https://github.com/melaasar/cs130-template/releases/latest)
+# OncoFlow
 
-This repo serves as a template for a repository that follows the Scrum process. The following information describes how the native features/workflows of Github can be customized to work in a scrum development process.
+### Integrated Oncology Care Coordination & Workflow Platform
 
-## Issues
+**CSYE 7230 · Team Fire Control**
 
-An issue is a unit of tracking work. Issues can be classified into different classes using `labels`. This can be used to classify issues in the scrum process as follows.
+<br />
 
-### Epic
+[![Project Status](https://img.shields.io/badge/Status-Planning-64748B?style=flat-square)](#project-status)
+[![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=000000)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
-An [epic](https://dev.to/jorenrui/a-look-into-how-i-manage-my-personal-projects-my-git-github-workflow-1e7h#epic-issue) is an issue with the label `epic`. It represents a large story that can be broken into stories, which can be addressed over multiple sprints. An epic issue references its story issues as a task list in its description. A Github action has been added to automatically check/uncheck the story task items when they get closed/reopened.
+<br />
 
-### Story
+A workflow-oriented oncology care platform designed to coordinate patients,
+clinicians, laboratories, pharmacies, insurance personnel, and administrators
+through secure, traceable, role-based workflows.
 
-A [story](https://www.atlassian.com/agile/project-management/epics-stories-themes) is an issue with the label `story`. It may represents a new feature, or an enhancement to an existing feature. A story issue can be broken into sub tasks, which are added as a task list in the description of the story issue. These sub task items can be checked manually by the developer to indicate completion.
+</div>
 
-### Bug
+---
 
-A bug is an issue with the label `bug`. It represents a problem with the existing code that needs to be fixed.
+## Overview
 
-### Question
+Cancer care involves a sequence of interconnected activities across multiple stakeholders, including diagnostic testing, treatment planning, medication fulfillment, insurance authorization, patient monitoring, and clinical follow-up.
 
-A question is an issue with the label `question`. It represents a question raised by any one and that may get converted into other types of issues.
+When these activities are handled through disconnected workflows, participants may have limited visibility into:
 
-## Labels
+- what has already been completed,
+- what remains pending,
+- who owns the next action, and
+- how the patient's overall care journey is progressing.
 
-In addition to the [standard labels](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/managing-labels#about-default-labels) above, you can add new labels to issues to classify them into different classes like `documentation`, `frontend`, etc, or to add metadata like `duplicate`, `invalid` etc.
+**OncoFlow** addresses this problem through a unified web platform focused on workflow orchestration, task visibility, role-based access control, and traceable cross-department handoffs.
 
-## Milestones
+The application is being developed as an academic software prototype using synthetic patient information only.
 
-A [milestone](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/tracking-the-progress-of-your-work-with-milestones) groups issues that are expected to be delivered at some point in time. It also allows ordering (prioritizing) theses issues and tracking their progress (percentage of issues completed so far). In the scrum context, a milestone can be used as a sprint. So, you can create your sprints and give them names like Sprint1, Sprint2, etc. and set their due dates respectively.
+---
 
-## Projects
+## Core Design
 
-A [project](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/tracking-the-progress-of-your-work-with-project-boards) is a kanban-style board that can aggregate a set of issues for any purpose. In the scrum context, we can create one project called `Scrum Board` and choose its template as `Automated kanban with reviews`. (This will create a set of initial notes that you can delete).
+OncoFlow is centered around two primary workflow concepts.
 
-## Branches
+### Unified Patient Care Timeline
 
-The `master` branch is the main branch used for releases. Other branches can be created. For example, a branch called `gh-pages` is often used to create a website for the repository (for more information check this [link](https://pages.github.com/)). Other branches can be created to address the issues of the repository, one branch per issue (called an `issue` branch). Such branches can then be used to create pull requests, where they get peer reviewed and eventually merged into the `master` branch. For more information on branches, check this [link](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-branches).
+Important events generated across clinical and administrative workflows are organized chronologically, allowing authorized users to understand the progression of a patient's care journey.
 
-## Pull Requests
+### Role-Based Work Queues
 
-A [pull request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests) is a request to merge commits from one branch to another branch. This is typically used to merge commits from an `issue` branch into the `master` branch. A pull request is how the process of peer review is carried. Reviewers can comment on the code changes to show approval or request changes (which will need to be addressed by additional commits to the `issue` branch). When a CI pipeline is configured for a repository (see below), it will run on any `issue` branch that is part of a pull request. When the peer review process has concluded, the new commits can merged into the `master` branch. The recommended merge option is `Squash and merge`, (i.e., squash all commits into a single commit), since it makes the repository's history simple and linear.
+Actions performed by one role can create downstream work for another role, establishing clear ownership and traceable handoffs between departments.
 
-## Tags
+```mermaid
+flowchart LR
+    A["Doctor creates diagnostic request"] --> B["Laboratory work queue"]
 
-Tags can be used to mark release points in a repository's commit history. Typically, after some work goal has been achieved, with a set of commits, a tag (typically a version number like 1.0.0, 1.0.1, etc.) is [pushed to the respository](https://stackoverflow.com/questions/18216991/create-a-tag-in-a-github-repository) to mark this point. This results in the tag showing up in the repository's [tags page](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/viewing-your-repositorys-releases-and-tags).
+    B --> C["Lab technician processes request"]
 
-## Workflows
+    C --> D["Diagnostic result published"]
 
-### Creating issues
+    D --> E["Patient care timeline updated"]
 
-An issue can be created from the `issues` tab of a repository. An issue type (bug, story, epic, question) is first chosen then its corresponding template can be sufficiently filled.
+    E --> F["Doctor reviews result"]
 
-### Triaging issues
+    F --> G["Treatment workflow continues"]
+```
 
-The Product Owner goes frequently to the `Scrum Board` project and clicks on the `Add Cards` link to triage new issues in the repository to the board's `To do` column, which acts here as the `Product Backlog`. Product Owner can also added unbaked ideas to the `To do` column as notes, which are placeholders that can later be converted into issues. Issues and notes can then be ordered in the `To do` column to show their priority.
+---
 
-### Planning sprints
+## Team
 
-The Scrum Master creates a new milestone and gives it a suitable name (e.g., Sprint1) and a due date. Then, in the `Scrum Board`, issues from the top of the `To do` column (assuming they have been ordered based on priority) can be assigned to that milestone and to the developers who will work on them.
+### Fire Control
 
-### Working on issues
+| Team Member | NUID |
+|---|---:|
+| **Aaryak Pawar** | `002065641` |
+| **Jamal Opeyemi Akinlabi** | `001647538` |
 
-Developers go to the `Scrum Board` where they can filter it for the issues assigned to them in a given milestone. They can pick ones to work on by moving them to the `In progress` column (this is important since this is not automated).
+---
 
-### Reviewing progress
+## User Roles
 
-In the daily standup, the `Scrum Master` can review progress by going to the `Scrum Board` and filtering it by the current milestone (sprint). Developers can then reference issues in the various columns when they answer the usual standup questions, e.g., isses they work on (`In progress`), finsihed (`Done`) or yet to work on (`To do`).
+| Role | Primary Responsibility |
+|---|---|
+| Patient | View relevant care progress, milestones, prescriptions, diagnostics, and authorization status |
+| Doctor / Oncologist | Manage treatment plans, diagnostic requests, prescriptions, and clinical workflows |
+| Nurse | Record care updates, vitals, observations, and treatment progress |
+| Laboratory Technician | Process diagnostic requests and publish results |
+| Pharmacist | Process prescriptions and manage fulfillment status |
+| Insurance Officer | Review authorization requests and update administrative status |
+| System Administrator | Manage users, permissions, system activity, audit history, and operational analytics |
 
-### Working with issue branches
+---
 
-Before developers can work on an issue, they should checkout and pull the `master` branch to ensure that they have all the latest commits locally. Then, they should create a new local `issue` branch and name it `issue-[number]` (replacing `[number]` by the issue number). Several `issue` branches can be created concurrently, one for each issue, but it is important to make them independent from each other by checking out the `master` branch before creating each of them. This allows them to be pushed and merged independently from each other (and with the least conflicts).
+## Functional Scope
 
-Each `issue` branch can accumulate commits to address the issue. When ready, it can then be pushed to a corresponding remote branch that can then be used to create a pull request into the `master` branch. The pull request template needs to be filled at this point. Once created, a pull request can be reviewed by a peer reviewer who may request changes. These changes can be made using new commits in the local `issue` branch that can subsequently be pushed to the corresponding remote `issue` branch. When all peer reviews have concluded, the pull request can then be `squash merged` into the `master` branch ([read more here](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-request-merges#squash-and-merge-your-pull-request-commits)), and the `issue` branch [can be deleted](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/managing-the-automatic-deletion-of-branches). If the pull request description includes the words `fixes #[number]` (where `[number]` is an issue number), the issue with that number will [automatically be closed](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
+The following capabilities define the planned prototype scope; they are not yet implemented.
 
-> it is recommeded to not push commits to the master branch directly but to always go through a peer review process using an `issue` branch.
+### Identity & Access
 
-### Creating releases
+- Secure user authentication
+- Role-Based Access Control
+- Server-side authorization
+- Account administration
+- Audit logging
 
-It is recommended to [create periodic releases](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release) from a repository, at least at the end of each sprint but can be more frequent. These releases should be working versions of the component(s) being developed in the repository. To create such releases, a new tag representing a version number (e.g., 1.0.0) is added to the local `master` branch then pushed to the remote `master` branch. A new release can then be created in Github using this tag.
+### Patient Care
 
-### Using a CI/CD pipeline
+- Patient profiles
+- Unified patient care timeline
+- Treatment planning
+- Nursing updates
+- Care milestone tracking
 
-Every repository needs to have a way to build its artifacts headlessly. It is a good idea to run tests as part of such build. Instructions on how to build the components in a repository needs to be documented in the repository's README.md.
+### Diagnostic Workflow
 
-A repository can also be setup to build continuously whenever a commit is pushed to the `master` branch by setting up a CI script (e.g., [Travis CI](https://www.travis-ci.com/)) in its root folder. Such script will configure the build environment (as a virtual machine) and invoke the build script on the `master` branch. If the script fails for some reason, the committer will be notified to fix it. It is a good practice to add a build [badge](https://shields.io/category/version) to the README.md file to visibly indicate the status of the last CI build (Travis CI provides such badges). 
+- Diagnostic request creation
+- Laboratory work queues
+- Request-status management
+- Diagnostic-result publication
+- Clinical review handoff
 
-The CI script will also be run when a new pull request is created or when more commits are pushed to its linked `issue` branch. Such build assures peer reviewers that the new commits when accepted will not break the build. In fact, a successful CI build can be a prerequisute for peer reviewers to look at the changes.
+### Pharmacy Workflow
 
-When a tag is pushed to the `master` branch, the CI script will additionally deliver and/or deploy the built artifact(s). The script can also be configured to create a Github release based on the tag.
+- Prescription creation
+- Pharmacy work queues
+- Fulfillment tracking
+- Prescription-status visibility
+
+### Insurance Workflow
+
+- Authorization request submission
+- Insurance review
+- Approval, rejection, or additional-information status
+- Clinical and patient visibility
+
+### Workflow Operations
+
+- Role-specific work queues
+- Cross-role handoffs
+- Workflow notifications
+- Operational dashboards
+- Audit trail
+- Administrative analytics
+
+---
+
+## Technology Stack
+
+The technologies below are planned selections. Application code, dependency versions, and deployment configuration have not yet been initialized.
+
+### Application Layer
+
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=000000)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+
+### Data Layer
+
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+
+### Quality & Delivery
+
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+| Layer | Planned Technology |
+|---|---|
+| Frontend | React, TypeScript, MUI |
+| Backend | Node.js, Express, TypeScript |
+| API | REST |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Authentication | JWT, bcrypt |
+| Authorization | Role-Based Access Control |
+| Validation | Zod |
+| Visualization | Recharts |
+| Unit / Integration Testing | Vitest or Jest, React Testing Library, Supertest |
+| End-to-End Testing | Playwright |
+| Containerization | Docker |
+| CI/CD | GitHub Actions |
+| Frontend Deployment | Vercel |
+| Backend Deployment | Render |
+| Test Data | Faker |
+
+---
+
+## Planned Epics
+
+| ID | Epic |
+|---:|---|
+| 01 | Authentication & Role-Based Access Control |
+| 02 | Patient Profiles & Unified Care Timeline |
+| 03 | Treatment Planning & Clinical Care |
+| 04 | Diagnostic & Laboratory Workflow |
+| 05 | Prescription & Pharmacy Workflow |
+| 06 | Insurance Authorization Workflow |
+| 07 | Work Queues, Cross-Role Handoffs & Notifications |
+| 08 | Analytics, Audit Trail & Administration |
+
+---
+
+## Development Workflow
+
+OncoFlow uses a structured branching strategy to keep development isolated, reviewable, and stable.
+
+```mermaid
+gitGraph
+    commit id: "stable"
+    branch develop
+    checkout develop
+    commit id: "integration"
+    branch feature-example
+    checkout feature-example
+    commit id: "feature work"
+    checkout develop
+    merge feature-example
+    checkout main
+    merge develop
+```
+
+### Branch Strategy
+
+**`main`**
+
+Stable and deployment-ready project state.
+
+**`develop`**
+
+Integration branch for completed and reviewed feature work.
+
+**`feature/*`**
+
+Isolated branches for individual features and stories.
+
+Example branch names:
+
+```text
+feature/authentication
+feature/patient-profile
+feature/laboratory-workflow
+feature/pharmacy-workflow
+feature/insurance-authorization
+feature/work-queue
+```
+
+Major changes should be integrated through Pull Requests rather than direct commits to `main`.
+
+---
+
+## Engineering Standards
+
+The project is planned around the following engineering practices:
+
+- clear separation between frontend, backend, and persistence layers,
+- server-side authorization rather than UI-only access restrictions,
+- schema-driven relational data modeling,
+- request validation at API boundaries,
+- environment-based configuration,
+- no secrets committed to source control,
+- automated tests for critical workflows,
+- Pull Request-based collaboration,
+- reproducible local development through containers,
+- CI checks before integration,
+- incremental commits with meaningful commit messages.
+
+---
+
+## Data & Privacy
+
+OncoFlow will use **synthetic patient information only**.
+
+The prototype does not:
+
+- store real patient data,
+- provide medical diagnosis,
+- generate treatment recommendations,
+- integrate with production hospital systems,
+- process real insurance transactions, or
+- claim production healthcare regulatory compliance.
+
+Security and privacy controls are included to demonstrate responsible software-engineering practices within an academic prototype.
+
+---
+
+## Scrum Workflow
+
+This repository was initialized from the Scrum repository template recommended for the course.
+
+The original template documentation has been preserved at:
+
+[Scrum workflow documentation](docs/SCRUM_WORKFLOW.md)
+
+This preserved document describes the original template, including its `master` and `issue-*` branch conventions. The OncoFlow branch strategy above uses `main`, `develop`, and `feature/*`.
+
+The repository retains:
+
+- Epic issue templates
+- Story issue templates
+- Bug issue templates
+- Question issue templates
+- Pull Request templates
+- Epic workflow automation
+
+---
+
+## Project Status
+
+**Current Phase:** Part A — Project Proposal & Initial Backlog
+
+| Deliverable | Status |
+|---|---|
+| Project concept | Complete |
+| GitHub repository | Complete |
+| `develop` branch | Complete |
+| Scrum template preservation | Complete |
+| GitHub Epics | Pending |
+| Application architecture | Pending |
+| Frontend initialization | Pending |
+| Backend initialization | Pending |
+| Database schema | Pending |
+| CI/CD pipeline | Pending |
+
+---
+
+## Getting Started
+
+The repository currently contains project documentation and Scrum templates. There is no runnable application, dependency manifest, database schema, or application build/test command yet.
+
+Start with the functional scope and planned epics above, then review the [Scrum workflow documentation](docs/SCRUM_WORKFLOW.md). Installation, environment configuration, database setup, and local run/test instructions will be added when the frontend and backend are initialized.
+
+---
+
+## License
+
+This repository includes the [Apache License 2.0](LICENSE).
+
+---
+
+## Repository
+
+**GitHub:** [AaryakPawar/fire-control-oncoflow](https://github.com/AaryakPawar/fire-control-oncoflow)
+
+---
+
+<div align="center">
+
+### OncoFlow
+
+**Engineering coordinated workflows for connected oncology care.**
+
+Team Fire Control · CSYE 7230
+
+</div>
